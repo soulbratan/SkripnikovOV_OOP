@@ -1,8 +1,3 @@
-import pytest
-import io
-from unittest.mock import mock_open, patch
-import unittest
-
 def test_product_1(first_product, second_product) -> None:
     assert first_product.name == "Samsung Galaxy S23 Ultra"
     assert first_product.description == "256GB, Серый цвет, 200MP камера"
