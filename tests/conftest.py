@@ -22,3 +22,34 @@ def first_category(first_product, second_product):
     return Category(name="Смартфоны",
                    description="Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни",
                    products=[first_product, second_product])
+
+
+@pytest.fixture
+def sample_data():
+    """Фикстура с тестовыми данными"""
+    return [
+        {
+            "name": "Смартфоны",
+            "description": "Описание смартфонов",
+            "products": [
+                {
+                    "name": "Samsung Galaxy",
+                    "description": "256GB, Серый",
+                    "price": 180000.0,
+                    "quantity": 5
+                }
+            ]
+        },
+        {
+            "name": "Телевизоры",
+            "description": "Описание телевизоров",
+            "products": [
+                {
+                    "name": "55 QLED 4K",
+                    "description": "Фоновая подсветка",
+                    "price": 123000.0,
+                    "quantity": 7
+                }
+            ]
+        }
+    ]
