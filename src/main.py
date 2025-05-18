@@ -1,3 +1,4 @@
+
 class Product:
     """Класс продукта для интернет-магазина"""
     name: str
@@ -6,7 +7,7 @@ class Product:
     quantity: int
 
 
-    def __init__(self, name, description, price, quantity):
+    def __init__(self, name: str, description: str, price: float, quantity: int):
         """Конструктор класса Product для создания экземпляра объекта"""
         self.name = name
         self.description = description
@@ -22,7 +23,8 @@ class Category:
     category_count: int = 0
     product_count: int = 0
 
-    def __init__(self, name, description, products=None):
+    def __init__(self, name: str, description: str, products: list | None=None):
+        """Конструктор класса Category для создания экземпляра объекта"""
         self.name = name
         self.description = description
         self.products = products if products else []
@@ -30,7 +32,7 @@ class Category:
         Category.product_count += len(products) if products else 0
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": # pragma: no cover
     product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
     product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
     product3 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
