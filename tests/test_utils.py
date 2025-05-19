@@ -26,19 +26,12 @@ def test_read_json_success() -> None:
             assert result == test_data
 
 
-def test_read_json_file_not_found() -> None:
-    """Тест обработки случая, когда файл не найден"""
-    with patch("builtins.open", side_effect=FileNotFoundError):
-        result = read_json("nonexistent.json")
-
-        # Проверяем, что возвращается структура по умолчанию
-        assert result == [
-            {
-                "name": "None",
-                "description": "None",
-                "products": [{"name": "None", "description": "None", "price": 0.0, "quantity": 0}],
-            }
-        ]
+def test_read_file_raises_file_not_found_error() -> None:
+    non_existent_file = "non_existent_file.txt"
+    # Проверяем, что при вызове read_file с несуществующим файлом
+    # действительно выбрасывается FileNotFoundError
+    with pytest.raises(FileNotFoundError):
+        read_json(non_existent_file)
 
 
 def test_read_json_invalid_json() -> None:

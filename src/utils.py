@@ -4,23 +4,14 @@ from typing import Any
 from src.main import Category, Product
 
 
-def read_json(path: str) -> list[dict] | Any:
+def read_json(path: str) -> list[dict]:
     """
     Функция чтения данных из json-файла.
     Принимает путь до файла, возвращает словарь с данными
     """
-    try:
-        full_path = os.path.abspath(path)
-        with open(full_path, "r", encoding="UTF-8") as f:
-            data = json.load(f)
-    except FileNotFoundError:
-        data = [
-            {
-                "name": "None",
-                "description": "None",
-                "products": [{"name": "None", "description": "None", "price": 0.0, "quantity": 0}],
-            }
-        ]
+    full_path = os.path.abspath(path)
+    with open(full_path, "r", encoding="UTF-8") as f:
+        data: list[dict] = json.load(f)
     return data
 
 

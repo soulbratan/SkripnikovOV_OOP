@@ -1,11 +1,6 @@
 class Product:
     """Класс продукта для интернет-магазина"""
 
-    name: str
-    description: str
-    price: float
-    quantity: int
-
     def __init__(self, name: str, description: str, price: float, quantity: int):
         """Конструктор класса Product для создания экземпляра объекта"""
         self.name = name
@@ -16,14 +11,10 @@ class Product:
 
 class Category:
     """Класс категории товара для интернет-магазина"""
-
-    name: str
-    description: str
-    products: list
     category_count: int = 0
     product_count: int = 0
 
-    def __init__(self, name: str, description: str, products: list | None = None):
+    def __init__(self, name: str, description: str, products: list[Product] | None = None):
         """Конструктор класса Category для создания экземпляра объекта"""
         self.name = name
         self.description = description

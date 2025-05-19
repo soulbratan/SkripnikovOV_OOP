@@ -2,6 +2,7 @@ from src.main import Category, Product
 
 
 def test_product_1(first_product: Product, second_product: Product) -> None:
+    """Тест проверяет корректность создания класса Продукт."""
     assert first_product.name == "Samsung Galaxy S23 Ultra"
     assert first_product.description == "256GB, Серый цвет, 200MP камера"
     assert first_product.price == 180000.0
@@ -14,6 +15,7 @@ def test_product_1(first_product: Product, second_product: Product) -> None:
 
 
 def test_category_1(first_category: Category) -> None:
+    """Тест проверяет корректность создания класса Категория."""
     assert first_category.name == "Смартфоны"
     assert (
         first_category.description
