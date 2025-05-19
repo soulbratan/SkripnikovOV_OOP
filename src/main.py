@@ -11,6 +11,7 @@ class Product:
 
 class Category:
     """Класс категории товара для интернет-магазина"""
+
     category_count: int = 0
     product_count: int = 0
 
