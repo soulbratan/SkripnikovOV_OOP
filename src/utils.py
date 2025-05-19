@@ -4,7 +4,7 @@ from typing import Any
 from src.main import Category, Product
 
 
-def read_json(path: str) -> list[dict] | Any:
+def read_json(path: str) -> list[dict]:
     """
     Функция чтения данных из json-файла.
     Принимает путь до файла, возвращает словарь с данными
