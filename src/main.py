@@ -26,9 +26,6 @@ class Product:
         price = product_data.get('price')
         quantity = product_data.get('quantity')
 
-        if not all([name, description, price is not None, quantity is not None]):
-            raise ValueError("Не все обязательные поля (name, description, price, quantity) указаны в словаре")
-
         # Поиск товара с таким же именем
         for product in existing_products:
             if product.name.lower() == name.lower():
