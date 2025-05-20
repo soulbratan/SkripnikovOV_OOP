@@ -81,28 +81,15 @@ class Category:
 
     def add_product(self, product: Product):
         """Метод для добавления товара в приватный список товаров категории"""
-        # Проверяем, нет ли уже такого товара в категории
-        existing_product = None
-        for p in self.__products:
-            if p.name.lower() == product.name.lower():
-                existing_product = p
-                break
-
-        if existing_product:
-            # Если товар найден, обновляем количество и цену
-            existing_product.quantity += product.quantity
-            existing_product.price = max(existing_product.price, product.price)
-        else:
-            # Если товар не найден, добавляем новый
-            self.__products.append(product)
-            Category.product_count += 1
+        self.__products.append(product)
+        Category.product_count += 1
 
     @property
     def products(self):
         """Геттер для получения списка товаров в заданном формате"""
         products_info = ""
         for product in self.__products:
-            products_info += (f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n")
+            products_info += f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n"
         return products_info
 
 
