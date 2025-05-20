@@ -34,3 +34,10 @@ def test_category_1(first_category: Category, third_product: Product) -> None:
     assert "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт." in first_category.products
 
 
+def test_new_product(new_data_product: dict) -> None:
+    """Проверка работы класс-метода new_product (возвращает созданный объект из словаря)"""
+    new_product = Product.new_product(new_data_product)
+    assert new_product.name == "Samsung Galaxy S23 Ultra"
+    assert new_product.description == "256GB, Серый цвет, 200MP камера"
+    assert new_product.price == 180000.0
+    assert new_product.quantity == 5

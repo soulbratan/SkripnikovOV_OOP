@@ -8,6 +8,38 @@ class Product:
         self.price = price
         self.quantity = quantity
 
+    @classmethod
+    def new_product(cls, product_data: dict, existing_products: list = None):
+        """
+        Класс-метод для создания нового товара из словаря с параметрами.
+        Если товар с таким именем уже существует, объединяет количество и выбирает максимальную цену.
+
+        :param product_data: Словарь с данными товара (name, description, price, quantity)
+        :param existing_products: Список существующих товаров для проверки дубликатов
+        :return: Объект класса Product (новый или обновленный)
+        """
+        if existing_products is None:
+            existing_products = []
+
+        name = product_data.get('name')
+        description = product_data.get('description')
+        price = product_data.get('price')
+        quantity = product_data.get('quantity')
+
+        if not all([name, description, price is not None, quantity is not None]):
+            raise ValueError("Не все обязательные поля (name, description, price, quantity) указаны в словаре")
+
+        # Поиск товара с таким же именем
+        for product in existing_products:
+            if product.name.lower() == name.lower():
+                # Объединение количества и выбор максимальной цены
+                product.quantity += quantity
+                product.price = max(product.price, price)  # Используем сеттер price
+                return product
+
+        # Если дубликат не найден, создаем новый товар
+        return cls(name, description, price, quantity)
+
 
 class Category:
     """Класс категории товара для интернет-магазина"""
