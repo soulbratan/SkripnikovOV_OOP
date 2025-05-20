@@ -5,8 +5,35 @@ class Product:
         """Конструктор класса Product для создания экземпляра объекта"""
         self.name = name
         self.description = description
-        self.price = price
+        self.__price = price  # Приватный атрибут цены
         self.quantity = quantity
+
+    @property
+    def price(self):
+        """Геттер для получения цены продукта"""
+        return self.__price
+
+    @price.setter
+    def price(self, new_price: float):
+        """
+        Сеттер для установки цены продукта с проверками:
+        1. Цена должна быть положительной
+        2. При понижении цены требует подтверждения пользователя
+        """
+        if new_price <= 0:
+            print("Цена не должна быть нулевая или отрицательная")
+            return
+
+        if new_price < self.__price:
+            # Если цена понижается, запрашиваем подтверждение
+            answer = input(
+                f"Вы действительно хотите понизить цену с {self.__price} до {new_price}? (y/n): ").lower()
+            if answer != 'y':
+                print("Изменение цены отменено")
+                return
+
+        self.__price = new_price
+        print("Цена успешно обновлена")
 
     @classmethod
     def new_product(cls, product_data: dict, existing_products: list = None):
@@ -48,15 +75,27 @@ class Category:
         """Конструктор класса Category для создания экземпляра объекта"""
         self.name = name
         self.description = description
-        self.__products = products if products else []
+        self.__products = products if products else []  # Приватный атрибут
         Category.category_count += 1
-        Category.product_count += len(products) if products else 0
-
+        Category.product_count += len(self.__products)
 
     def add_product(self, product: Product):
         """Метод для добавления товара в приватный список товаров категории"""
-        self.__products.append(product)
-        Category.product_count += 1
+        # Проверяем, нет ли уже такого товара в категории
+        existing_product = None
+        for p in self.__products:
+            if p.name.lower() == product.name.lower():
+                existing_product = p
+                break
+
+        if existing_product:
+            # Если товар найден, обновляем количество и цену
+            existing_product.quantity += product.quantity
+            existing_product.price = max(existing_product.price, product.price)
+        else:
+            # Если товар не найден, добавляем новый
+            self.__products.append(product)
+            Category.product_count += 1
 
     @property
     def products(self):
