@@ -14,13 +14,23 @@ def test_product_1(first_product: Product, second_product: Product) -> None:
     assert second_product.quantity == 8
 
 
-def test_category_1(first_category: Category) -> None:
+def test_category_1(first_category: Category, third_product: Product) -> None:
     """Тест проверяет корректность создания класса Категория."""
     assert first_category.name == "Смартфоны"
     assert (
         first_category.description
         == "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни"
     )
-    assert first_category.products[0].name == "Samsung Galaxy S23 Ultra"
+    assert "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт." in first_category.products
+    assert "Iphone 15, 210000.0 руб. Остаток: 8 шт." in first_category.products
+    assert "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт." not in first_category.products
     assert first_category.category_count == 1
     assert first_category.product_count == 2
+
+    # Добавляем продукт в категорию
+    first_category.add_product(third_product)
+    assert first_category.category_count == 1
+    assert first_category.product_count == 3
+    assert "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт." in first_category.products
+
+

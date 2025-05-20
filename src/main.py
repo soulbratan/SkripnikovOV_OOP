@@ -19,9 +19,23 @@ class Category:
         """Конструктор класса Category для создания экземпляра объекта"""
         self.name = name
         self.description = description
-        self.products = products if products else []
+        self.__products = products if products else []
         Category.category_count += 1
         Category.product_count += len(products) if products else 0
+
+
+    def add_product(self, product: Product):
+        """Метод для добавления товара в приватный список товаров категории"""
+        self.__products.append(product)
+        Category.product_count += 1
+
+    @property
+    def products(self):
+        """Геттер для получения списка товаров в заданном формате"""
+        products_info = ""
+        for product in self.__products:
+            products_info += (f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.\n")
+        return products_info
 
 
 if __name__ == "__main__":  # pragma: no cover
