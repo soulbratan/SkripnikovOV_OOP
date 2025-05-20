@@ -31,6 +31,12 @@ def new_data_product() -> dict:
 
 
 @pytest.fixture
+def new_data_product_n() -> dict:
+    return {"name": "Samsung Galaxy S23 Ultra", "description": "256GB, Серый цвет, 200MP камера", "price": 190000.0,
+         "quantity": 3}
+
+
+@pytest.fixture()
 def first_category(first_product: Product, second_product: Product) -> Category:
     return Category(
         name="Смартфоны",

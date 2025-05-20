@@ -4,7 +4,7 @@ from unittest.mock import mock_open, patch
 
 import pytest
 
-from src.main import Category, Product
+from src.main import Category
 from src.utils import create_objects_from_json, read_json
 
 
@@ -49,7 +49,6 @@ def test_create_objects_from_json_structure(sample_data: list[dict]) -> None:
     assert isinstance(result, list)
     assert len(result) == 2
     assert all(isinstance(category, Category) for category in result)
-    assert all(isinstance(product, Product) for category in result for product in category.products)
 
 
 def test_create_objects_from_json_values(sample_data: list[dict]) -> None:
@@ -59,16 +58,12 @@ def test_create_objects_from_json_values(sample_data: list[dict]) -> None:
     # Проверка первой категории
     assert result[0].name == "Смартфоны"
     assert result[0].description == "Описание смартфонов"
-    assert len(result[0].products) == 1
-    assert result[0].products[0].name == "Samsung Galaxy"
-    assert result[0].products[0].price == 180000.0
+    assert result[0].products == "Samsung Galaxy, 180000.0 руб. Остаток: 5 шт.\n"
 
     # Проверка второй категории
     assert result[1].name == "Телевизоры"
     assert result[1].description == "Описание телевизоров"
-    assert len(result[1].products) == 1
-    assert result[1].products[0].name == "55 QLED 4K"
-    assert result[1].products[0].price == 123000.0
+    assert result[1].products == "55 QLED 4K, 123000.0 руб. Остаток: 7 шт.\n"
 
 
 def test_create_objects_from_json_empty_products() -> None:
