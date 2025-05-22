@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Any
 
 
 class Product:
@@ -107,6 +107,11 @@ class Category:
             products_info += f"{str(product)}\n"
         return products_info
 
+    @property
+    def products_list(self) -> list:
+        """Геттер для списка продуктов (чтобы итерировать)"""
+        return self.__products
+
 
 class CategoryIterator:
     """Вспомогательный класс для итерации по товарам категории"""
@@ -114,14 +119,14 @@ class CategoryIterator:
     def __init__(self, category: "Category") -> None:
         """Инициализация итератора с указанной категорией"""
         self.category = category
-        self.products: list[str] = category._Category__products  # Доступ к приватному атрибуту товаров
+        self.products: list = category.products_list  # Доступ к приватному атрибуту товаров
 
     def __iter__(self) -> "CategoryIterator":
         """Возвращает сам объект итератора"""
         self.index = 0
         return self
 
-    def __next__(self) -> str:
+    def __next__(self) -> Any:
         """Возвращает следующий товар в категории"""
         if self.index < len(self.products):
             product = self.products[self.index]
