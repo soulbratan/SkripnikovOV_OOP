@@ -1,6 +1,6 @@
 import pytest
 
-from src.main import Category, Product
+from src.main import Category, CategoryIterator, Product
 
 
 @pytest.fixture
@@ -75,3 +75,8 @@ def sample_data() -> list[dict]:
             "products": [{"name": "55 QLED 4K", "description": "Фоновая подсветка", "price": 123000.0, "quantity": 7}],
         },
     ]
+
+
+@pytest.fixture
+def category_iterator(first_category: Category) -> CategoryIterator:
+    return CategoryIterator(first_category)
