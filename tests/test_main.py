@@ -1,7 +1,9 @@
 from typing import Any
 from unittest.mock import MagicMock, patch
 
-from src.main import Category, Product
+import pytest
+
+from src.main import Category, Product, CategoryIterator
 
 
 def test_product_1(first_product: Product, second_product: Product) -> None:
@@ -81,3 +83,38 @@ def test_new_price_cancel_to_product(mock_input: MagicMock, new_data_product: di
     captured = capsys.readouterr()
     assert captured.out == "Изменение цены отменено\n"
     mock_input.assert_called_once()
+
+
+def test_str_methods(
+    first_category: Category, first_product: Product, second_product: Product, third_product: Product
+) -> None:
+    """Тестирование метода __str__ для классов Product и Category"""
+    assert str(first_category) == "Смартфоны, количество продуктов: 13 шт."
+    assert str(first_product) == "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт."
+    assert str(second_product) == "Iphone 15, 210000.0 руб. Остаток: 8 шт."
+    assert str(third_product) == "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт."
+
+
+def test_add_products(first_product: Product, second_product: Product, third_product: Product) -> None:
+    """Тестирование переопределённого метода __add__ для класса Product"""
+    assert (first_product + second_product) == 2580000.0
+    assert (first_product + third_product) == 1334000.0
+    assert (second_product + third_product) == 2114000.0
+
+
+def test_products_list_getter(first_category: Category, first_product: Product, second_product: Product) -> None:
+    """Тест геттера products_list"""
+    assert len(first_category.products_list) == 2
+    assert first_category.products_list[0] == first_product
+    assert first_category.products_list[1] == second_product
+
+
+def test_category_iterator(category_iterator: CategoryIterator) -> None:
+    """Тестирование итератора CategoryIterator"""
+    iter(category_iterator)
+    assert category_iterator.index == 0
+    assert next(category_iterator).name == "Samsung Galaxy S23 Ultra"
+    assert next(category_iterator).name == "Iphone 15"
+
+    with pytest.raises(StopIteration):
+        next(category_iterator)
