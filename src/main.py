@@ -15,7 +15,7 @@ class Product:
         """Строковое представление продукта"""
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
 
-    def __add__(self, other) -> float:
+    def __add__(self, other: "Product") -> float:
         """Магический метод сложения сумм всех товаров в наличии"""
         return self.quantity * self.__price + other.quantity * other.price
 
@@ -108,6 +108,29 @@ class Category:
         return products_info
 
 
+class CategoryIterator:
+    """Вспомогательный класс для итерации по товарам категории"""
+
+    def __init__(self, category: "Category") -> None:
+        """Инициализация итератора с указанной категорией"""
+        self.category = category
+        self.products: list[str] = category._Category__products  # Доступ к приватному атрибуту товаров
+
+    def __iter__(self) -> "CategoryIterator":
+        """Возвращает сам объект итератора"""
+        self.index = 0
+        return self
+
+    def __next__(self) -> str:
+        """Возвращает следующий товар в категории"""
+        if self.index < len(self.products):
+            product = self.products[self.index]
+            self.index += 1
+            return product
+        else:
+            raise StopIteration
+
+
 if __name__ == '__main__':  # pragma: no cover
     product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
     product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
@@ -130,3 +153,7 @@ if __name__ == '__main__':  # pragma: no cover
     print(product1 + product2)
     print(product1 + product3)
     print(product2 + product3)
+
+    category1_iter = CategoryIterator(category1)
+    for prod in category1_iter:
+        print(prod)
