@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-from src.main import Category, Product, CategoryIterator
+from src.main import Category, CategoryIterator, LawnGrass, Product, Smartphone
 
 
 def test_product_1(first_product: Product, second_product: Product) -> None:
@@ -20,7 +20,7 @@ def test_product_1(first_product: Product, second_product: Product) -> None:
 
 
 def test_category_1(
-    first_category: Category, third_product: Product, new_data_product: dict, new_data_product_n: dict
+    first_category: Category, third_product: Product, new_data_product: dict, new_data_product_n: dict, capsys: Any
 ) -> None:
     """Тест проверяет корректность создания класса Категория."""
     assert first_category.name == "Смартфоны"
@@ -39,6 +39,12 @@ def test_category_1(
     assert first_category.category_count == 1
     assert first_category.product_count == 3
     assert "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт." in first_category.products
+
+    # Добавляем не продукт
+    with pytest.raises(TypeError):
+        first_category.add_product("Not a product")  # type: ignore
+        captured = capsys.readouterr()
+        assert captured.out == "Возникла ошибка TypeError при добавлении не продукта"
 
 
 def test_new_product(new_data_product: dict, new_data_product_n: dict, capsys: Any) -> None:
@@ -120,7 +126,7 @@ def test_category_iterator(category_iterator: CategoryIterator) -> None:
         next(category_iterator)
 
 
-def test_smartphone_class(first_smartphone: Product, second_smartphone: Product) -> None:
+def test_smartphone_class(first_smartphone: Smartphone, second_smartphone: Smartphone) -> None:
     """Тестирование создание экземпляра класса Smartphone"""
     assert first_smartphone.name == "Samsung Galaxy S23 Ultra"
     assert first_smartphone.description == "256GB, Серый цвет, 200MP камера"
@@ -130,7 +136,6 @@ def test_smartphone_class(first_smartphone: Product, second_smartphone: Product)
     assert first_smartphone.model == "S23 Ultra"
     assert first_smartphone.memory == 256
     assert first_smartphone.color == "Серый"
-
 
     assert second_smartphone.name == "Iphone 15"
     assert second_smartphone.description == "512GB, Gray space"
@@ -142,7 +147,7 @@ def test_smartphone_class(first_smartphone: Product, second_smartphone: Product)
     assert second_smartphone.color == "Gray space"
 
 
-def test_lawngrass_class(first_lawngrass: Product, second_lawngrass: Product) -> None:
+def test_lawngrass_class(first_lawngrass: LawnGrass, second_lawngrass: LawnGrass) -> None:
     """Тестирование создание экземпляра класса LawnGrass"""
     assert first_lawngrass.name == "Газонная трава"
     assert first_lawngrass.description == "Элитная трава для газона"
@@ -151,8 +156,6 @@ def test_lawngrass_class(first_lawngrass: Product, second_lawngrass: Product) ->
     assert first_lawngrass.country == "Россия"
     assert first_lawngrass.germination_period == "7 дней"
     assert first_lawngrass.color == "Зеленый"
-
-
 
     assert second_lawngrass.name == "Газонная трава 2"
     assert second_lawngrass.description == "Выносливая трава"
@@ -163,7 +166,13 @@ def test_lawngrass_class(first_lawngrass: Product, second_lawngrass: Product) ->
     assert second_lawngrass.color == "Темно-зеленый"
 
 
-def test_add_products_oneclasses(first_lawngrass: Product, second_lawngrass: Product, first_smartphone: Product, second_smartphone: Product, capsys: Any) -> None:
+def test_add_products_oneclasses(
+    first_lawngrass: LawnGrass,
+    second_lawngrass: LawnGrass,
+    first_smartphone: Smartphone,
+    second_smartphone: Smartphone,
+    capsys: Any,
+) -> None:
     """Тестирование магического метода сложения для разных продуктов"""
     smartphone_sum = first_smartphone + second_smartphone
     grass_summ = first_lawngrass + second_lawngrass
