@@ -148,6 +148,15 @@ class Smartphone(Product):
         self.color = color
 
 
+class LawnGrass(Product):
+    """Дочерний класс от Product для описания товара Трава газонная"""
+    def __init__(self, name: str, description: str, price: float, quantity: int, country: str, germination_period: str, color: str) -> None:
+        super().__init__(name, description, price, quantity)
+        self.country = country
+        self.germination_period = germination_period
+        self.color = color
+
+
 if __name__ == '__main__': # pragma: no cover
     smartphone1 = Smartphone("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5, 95.5,
                          "S23 Ultra", 256, "Серый")
