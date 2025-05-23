@@ -99,8 +99,11 @@ class Category:
 
     def add_product(self, product: Product) -> None:
         """Метод для добавления товара в приватный список товаров категории"""
-        self.__products.append(product)
-        Category.product_count += 1
+        if isinstance(product, Product):
+            self.__products.append(product)
+            Category.product_count += 1
+        else:
+            raise TypeError
 
     @property
     def products(self) -> str:
@@ -143,14 +146,25 @@ class CategoryIterator:
 
 class Smartphone(Product):
     """Дочерний класс от Product для описания товара Смартфон"""
-    def __init__(self, name: str, description: str, price: float, quantity: int, efficiency: float, model: str, memory: int, color: str) -> None:
+
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        price: float,
+        quantity: int,
+        efficiency: float,
+        model: str,
+        memory: int,
+        color: str,
+    ) -> None:
         super().__init__(name, description, price, quantity)
         self.efficiency = efficiency
         self.model = model
         self.memory = memory
         self.color = color
 
-    def __add__(self, other: "Smartphone") -> float:
+    def __add__(self, other: "Product") -> float:
         """Магический метод сложения сумм всех товаров в наличии"""
         if type(other) is Smartphone:
             return self.quantity * self.price + other.quantity * other.price
@@ -160,13 +174,23 @@ class Smartphone(Product):
 
 class LawnGrass(Product):
     """Дочерний класс от Product для описания товара Трава газонная"""
-    def __init__(self, name: str, description: str, price: float, quantity: int, country: str, germination_period: str, color: str) -> None:
+
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        price: float,
+        quantity: int,
+        country: str,
+        germination_period: str,
+        color: str,
+    ) -> None:
         super().__init__(name, description, price, quantity)
         self.country = country
         self.germination_period = germination_period
         self.color = color
 
-    def __add__(self, other: "LawnGrass") -> float:
+    def __add__(self, other: "Product") -> float:
         """Магический метод сложения сумм всех товаров одного продукта в наличии"""
         if type(other) is LawnGrass:
             return self.quantity * self.price + other.quantity * other.price
@@ -174,9 +198,10 @@ class LawnGrass(Product):
             raise TypeError
 
 
-if __name__ == '__main__': # pragma: no cover
-    smartphone1 = Smartphone("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5, 95.5,
-                         "S23 Ultra", 256, "Серый")
+if __name__ == "__main__":  # pragma: no cover
+    smartphone1 = Smartphone(
+        "Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5, 95.5, "S23 Ultra", 256, "Серый"
+    )
     smartphone2 = Smartphone("Iphone 15", "512GB, Gray space", 210000.0, 8, 98.2, "15", 512, "Gray space")
     smartphone3 = Smartphone("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14, 90.3, "Note 11", 1024, "Синий")
 
@@ -249,7 +274,7 @@ if __name__ == '__main__': # pragma: no cover
     print(Category.product_count)
 
     try:
-        category_smartphones.add_product("Not a product")
+        category_smartphones.add_product("Not a product")  # type: ignore
     except TypeError:
         print("Возникла ошибка TypeError при добавлении не продукта")
     else:
