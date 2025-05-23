@@ -118,3 +118,45 @@ def test_category_iterator(category_iterator: CategoryIterator) -> None:
 
     with pytest.raises(StopIteration):
         next(category_iterator)
+
+
+def test_smartphone_class(first_smartphone, second_smartphone) -> None:
+    assert first_smartphone.name == "Samsung Galaxy S23 Ultra"
+    assert first_smartphone.description == "256GB, Серый цвет, 200MP камера"
+    assert first_smartphone.price == 180000.0
+    assert first_smartphone.quantity == 5
+    assert first_smartphone.efficiency == 95.5
+    assert first_smartphone.model == "S23 Ultra"
+    assert first_smartphone.memory == 256
+    assert first_smartphone.color == "Серый"
+
+
+    assert second_smartphone.name == "Iphone 15"
+    assert second_smartphone.description == "512GB, Gray space"
+    assert second_smartphone.price == 210000.0
+    assert second_smartphone.quantity == 8
+    assert second_smartphone.efficiency == 98.2
+    assert second_smartphone.model == "15"
+    assert second_smartphone.memory == 512
+    assert second_smartphone.color == "Gray space"
+
+
+def test_lawngrass_class(first_lawngrass, second_lawngrass) -> None:
+    assert first_lawngrass.name == "Газонная трава"
+    assert first_lawngrass.description == "Элитная трава для газона"
+    assert first_lawngrass.price == 500.0
+    assert first_lawngrass.quantity == 20
+    assert first_lawngrass.country == "Россия"
+    assert first_lawngrass.germination_period == "7 дней"
+    assert first_lawngrass.color == "Зеленый"
+
+
+
+    assert second_lawngrass.name == "Газонная трава 2"
+    assert second_lawngrass.description == "Выносливая трава"
+    assert second_lawngrass.price == 450.0
+    assert second_lawngrass.quantity == 15
+    assert second_lawngrass.country == "США"
+    assert second_lawngrass.germination_period == "5 дней"
+    assert second_lawngrass.color == "Темно-зеленый"
+
