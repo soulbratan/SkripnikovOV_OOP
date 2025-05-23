@@ -120,7 +120,8 @@ def test_category_iterator(category_iterator: CategoryIterator) -> None:
         next(category_iterator)
 
 
-def test_smartphone_class(first_smartphone, second_smartphone) -> None:
+def test_smartphone_class(first_smartphone: Product, second_smartphone: Product) -> None:
+    """Тестирование создание экземпляра класса Smartphone"""
     assert first_smartphone.name == "Samsung Galaxy S23 Ultra"
     assert first_smartphone.description == "256GB, Серый цвет, 200MP камера"
     assert first_smartphone.price == 180000.0
@@ -141,7 +142,8 @@ def test_smartphone_class(first_smartphone, second_smartphone) -> None:
     assert second_smartphone.color == "Gray space"
 
 
-def test_lawngrass_class(first_lawngrass, second_lawngrass) -> None:
+def test_lawngrass_class(first_lawngrass: Product, second_lawngrass: Product) -> None:
+    """Тестирование создание экземпляра класса LawnGrass"""
     assert first_lawngrass.name == "Газонная трава"
     assert first_lawngrass.description == "Элитная трава для газона"
     assert first_lawngrass.price == 500.0
@@ -160,3 +162,20 @@ def test_lawngrass_class(first_lawngrass, second_lawngrass) -> None:
     assert second_lawngrass.germination_period == "5 дней"
     assert second_lawngrass.color == "Темно-зеленый"
 
+
+def test_add_products_oneclasses(first_lawngrass: Product, second_lawngrass: Product, first_smartphone: Product, second_smartphone: Product, capsys: Any) -> None:
+    """Тестирование магического метода сложения для разных продуктов"""
+    smartphone_sum = first_smartphone + second_smartphone
+    grass_summ = first_lawngrass + second_lawngrass
+    assert smartphone_sum == 2580000.0
+    assert grass_summ == 16750.0
+
+    with pytest.raises(TypeError):
+        invalid_sum_1 = first_smartphone + first_lawngrass
+        captured = capsys.readouterr()
+        assert captured.out == "Возникла ошибка TypeError при попытке сложения"
+
+    with pytest.raises(TypeError):
+        invalid_summ_2 = second_lawngrass + second_smartphone
+        captured = capsys.readouterr()
+        assert captured.out == "Возникла ошибка TypeError при попытке сложения"
