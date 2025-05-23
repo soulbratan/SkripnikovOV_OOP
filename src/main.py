@@ -17,7 +17,10 @@ class Product:
 
     def __add__(self, other: "Product") -> float:
         """Магический метод сложения сумм всех товаров в наличии"""
-        return self.quantity * self.__price + other.quantity * other.price
+        if type(other) is Product:
+            return self.quantity * self.__price + other.quantity * other.price
+        else:
+            raise TypeError
 
     @property
     def price(self) -> float:
@@ -147,6 +150,13 @@ class Smartphone(Product):
         self.memory = memory
         self.color = color
 
+    def __add__(self, other: "Smartphone") -> float:
+        """Магический метод сложения сумм всех товаров в наличии"""
+        if type(other) is Smartphone:
+            return self.quantity * self.price + other.quantity * other.price
+        else:
+            raise TypeError
+
 
 class LawnGrass(Product):
     """Дочерний класс от Product для описания товара Трава газонная"""
@@ -155,6 +165,13 @@ class LawnGrass(Product):
         self.country = country
         self.germination_period = germination_period
         self.color = color
+
+    def __add__(self, other: "LawnGrass") -> float:
+        """Магический метод сложения сумм всех товаров одного продукта в наличии"""
+        if type(other) is LawnGrass:
+            return self.quantity * self.price + other.quantity * other.price
+        else:
+            raise TypeError
 
 
 if __name__ == '__main__': # pragma: no cover
