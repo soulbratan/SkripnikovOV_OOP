@@ -9,7 +9,16 @@ class BaseProduct(ABC):
         pass
 
 
-class Product:
+class PrintMixin:
+    """Миксин класс для печати информации о том, от какого класса и с какими параметрами создан объект"""
+    def __init__(self) -> None:
+        print(repr(self))
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}({self.name}, {self.description}, {self.price}, {self.quantity})"
+
+
+class Product(BaseProduct, PrintMixin):
     """Класс продукта для интернет-магазина"""
 
     def __init__(self, name: str, description: str, price: float, quantity: int) -> None:
@@ -18,6 +27,7 @@ class Product:
         self.description = description
         self.__price = price  # Приватный атрибут цены
         self.quantity = quantity
+        super().__init__()
 
     def __str__(self) -> str:
         """Строковое представление продукта"""
