@@ -145,6 +145,13 @@ class Category:
         """Геттер для списка продуктов (чтобы итерировать)"""
         return self.__products
 
+    def middle_price(self) -> float:
+        """Метод для подсчёта средней цены продуктов. Если в списке продуктов пусто, то возвращает 0"""
+        try:
+            return round(sum([product.price for product in self.__products]) / len(self.__products), 2)
+        except ZeroDivisionError:
+            return 0.0
+
 
 class CategoryIterator:
     """Вспомогательный класс для итерации по товарам категории"""
