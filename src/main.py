@@ -145,7 +145,7 @@ class Category:
         """Геттер для списка продуктов (чтобы итерировать)"""
         return self.__products
 
-    def middle_price(self) -> float:
+    def middle_price(self) -> Any:
         """Метод для подсчёта средней цены продуктов. Если в списке продуктов пусто, то возвращает 0"""
         try:
             return round(sum([product.price for product in self.__products]) / len(self.__products), 2)
@@ -232,12 +232,14 @@ class LawnGrass(Product):
             raise TypeError
 
 
-if __name__ == '__main__':  # pragma: no cover
+if __name__ == "__main__":  # pragma: no cover
     try:
         product_invalid = Product("Бракованный товар", "Неверное количество", 1000.0, 0)
-    except ValueError as e:
+    except ValueError:
         print(
-            "Возникла ошибка ValueError прерывающая работу программы при попытке добавить продукт с нулевым количеством")
+            "Возникла ошибка ValueError прерывающая работу программы при попытке добавить "
+            "продукт с нулевым количеством"
+        )
     else:
         print("Не возникла ошибка ValueError при попытке добавить продукт с нулевым количеством")
 
