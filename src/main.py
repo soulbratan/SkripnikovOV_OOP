@@ -1,4 +1,12 @@
 from typing import Any, Optional
+from abc import ABC, abstractmethod
+
+
+class BaseProduct(ABC):
+    """Базовый класс для продуктов"""
+    @abstractmethod
+    def __add__(self, other: "Product") -> float:
+        pass
 
 
 class Product:
