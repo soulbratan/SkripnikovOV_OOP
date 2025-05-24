@@ -33,7 +33,7 @@ poetry install
 
 ## Документация:
 
-[**SkyPro_условия ДЗ 10.1**](https://my.sky.pro/student-cabinet/stream-lesson/161887/homework-requirements)
+[**SkyPro_условия ДЗ 17.1**](https://my.sky.pro/student-cabinet/stream-lesson/161903/homework-requirements)
 
 ## Тестирование:
 1. **Создана фикстура для тестирования каждой функции**
