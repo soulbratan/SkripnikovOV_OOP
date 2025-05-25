@@ -106,6 +106,8 @@ def test_add_products(first_product: Product, second_product: Product, third_pro
     assert (first_product + second_product) == 2580000.0
     assert (first_product + third_product) == 1334000.0
     assert (second_product + third_product) == 2114000.0
+    with pytest.raises(TypeError):
+        first_product + 1  # type: ignore
 
 
 def test_products_list_getter(first_category: Category, first_product: Product, second_product: Product) -> None:
@@ -205,3 +207,26 @@ def test_print_mixin(capsys: Any) -> None:
     LawnGrass("Газонная трава", "Элитная трава для газона", 500.0, 20, "Россия", "7 дней", "Зеленый")
     captured = capsys.readouterr()
     assert captured.out.strip() == "LawnGrass(Газонная трава, Элитная трава для газона, 500.0, 20)"
+
+
+def test_zero_quantity_product() -> None:
+    """Тест создания объекта с нулевым количеством"""
+    with pytest.raises(ValueError) as e:
+        Product(
+            name="Samsung Galaxy S25 Ultra", description="512GB, Белый цвет, 100MP камера", price=130000.0, quantity=0
+        )
+        assert str(e.value) == "Товар с нулевым количеством не может быть добавлен"
+
+
+def test_middle_price(first_category: Category, empty_product_category: Category) -> None:
+    """Тест метода middle_price класса Product"""
+    fcmp = first_category.middle_price()  # Сохраняем результат вызова метода в переменную
+    assert fcmp == 195000.0  # Проверяем результат работы
+
+    first_category.products_list[0].price = 250000.0  # Меняем значение цены товаров
+    first_category.products_list[1].price = 250000.0
+    fcmp = first_category.middle_price()  # Сохраняем результат вызова метода в переменную
+    assert fcmp == 250000.0  # Проверяем результат работы
+
+    epc = empty_product_category.middle_price()  # Сохраняем результат вызова метода для экземпляра с пустым списком
+    assert epc == 0.0  # Проверяем результат работы для отсутствующих товаров
